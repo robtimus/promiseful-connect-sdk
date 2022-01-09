@@ -6,7 +6,7 @@
   "bugs": {
     "url": "https://github.com/robtimus/promiseful-connect-sdk/issues"
   },
-  "license": "MI(T",
+  "license": "MIT",
   "author": "Rob Spoor",
   "files": [
     "lib"
