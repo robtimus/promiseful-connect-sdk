@@ -49,6 +49,7 @@ import {
   GetIINDetailsRequest,
   GetIINDetailsResponse,
   GetPrivacyPolicyResponse,
+  SettlementDetails,
   TestConnection,
 } from "connect-sdk-nodejs/lib/model/domain/services";
 import { SessionRequest, SessionResponse } from "connect-sdk-nodejs/lib/model/domain/sessions";
@@ -182,6 +183,7 @@ export interface ServicesClient {
   getIINdetails(merchantId: string, postData: GetIINDetailsRequest, paymentContext?: PaymentContext | null): Promise<GetIINDetailsResponse>;
   privacypolicy(merchantId: string, paymentContext: PrivacypolicyParams): Promise<GetPrivacyPolicyResponse>;
   testconnection(merchantId: string, paymentContext?: PaymentContext | null): Promise<TestConnection>;
+  settlementdetails(merchantId: string, paymentId: string, paymentContext?: PaymentContext | null): Promise<SettlementDetails>;
 }
 
 export interface SessionsClient {
