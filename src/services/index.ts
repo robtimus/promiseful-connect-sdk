@@ -38,12 +38,5 @@ const servicesClient: ServicesClient = {
       });
     });
   },
-  settlementdetails(merchantId, paymentId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.services.settlementdetails(merchantId, paymentId, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
-      });
-    });
-  },
 };
 export = servicesClient;
