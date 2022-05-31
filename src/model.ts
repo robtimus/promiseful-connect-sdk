@@ -1,4 +1,4 @@
-import { Context, FileMetaData, PaymentContext, SdkContext } from "connect-sdk-nodejs/lib/model";
+import { Context, FileMetaData, ObfuscationRules, PaymentContext, SdkContext } from "connect-sdk-nodejs/lib/model";
 import { UploadFileRequest } from "connect-sdk-nodejs/lib/model/disputes";
 import { CaptureResponse, CapturesResponse } from "connect-sdk-nodejs/lib/model/domain/capture";
 import { CreateDisputeRequest, DisputeResponse, DisputesResponse, UploadDisputeFileResponse } from "connect-sdk-nodejs/lib/model/domain/dispute";
@@ -218,4 +218,6 @@ export interface ConnectSdk {
   readonly context: SdkContext;
 
   readonly webhooks: WebhooksHelper;
+
+  readonly obfuscate: ObfuscationRules;
 }

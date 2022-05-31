@@ -41,6 +41,7 @@ const connectSdk: ConnectSdk = {
 
   context: delegate.context,
   webhooks,
+  obfuscate: delegate.obfuscate,
 };
 
 export = connectSdk;
