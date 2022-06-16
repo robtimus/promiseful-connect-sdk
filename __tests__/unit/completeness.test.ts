@@ -1,5 +1,5 @@
-import connectSdk = require("connect-sdk-nodejs");
-import wrapper = require("../../src");
+import * as connectSdk from "connect-sdk-nodejs";
+import * as wrapper from "../../src";
 
 wrapper.init({
   host: "test",
@@ -11,15 +11,27 @@ wrapper.init({
   integrator: "dummy",
 });
 
+const additionalProperties = {
+  "connectSdk.webhooks": ["initWithCallbacks"],
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function testIdenticalStructure(original: any, wrapper: any, title: string) {
+function testIdenticalStructure(original: any, wrapper: any, title: string, path: string) {
   if (typeof original === "object") {
     if (wrapper) {
       describe(title, () => {
-        Object.getOwnPropertyNames(original).forEach((property) => {
+        const originalProperties = Object.getOwnPropertyNames(original).sort();
+        test("same properties", () => {
+          const additionalProps: string[] = additionalProperties[path] || [];
+          const wrapperProperties = Object.getOwnPropertyNames(wrapper)
+            .sort()
+            .filter((p) => !additionalProps.includes(p));
+          expect(originalProperties).toEqual(wrapperProperties);
+        });
+        originalProperties.forEach((property) => {
           const originalValue = original[property];
           const wrapperValue = wrapper[property];
-          testIdenticalStructure(originalValue, wrapperValue, property);
+          testIdenticalStructure(originalValue, wrapperValue, property, path + "." + property);
         });
       });
     } else {
@@ -40,4 +52,4 @@ function testIdenticalStructure(original: any, wrapper: any, title: string) {
 /**
  * @group unit:completeness
  */
-testIdenticalStructure(connectSdk, wrapper, "identical structure");
+testIdenticalStructure(connectSdk, wrapper, "identical structure", "connectSdk");

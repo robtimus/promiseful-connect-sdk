@@ -13,16 +13,14 @@ A wrapper around [connect-sdk-nodejs](https://github.com/Ingenico-ePayments/conn
 
 ## Comparison with connect-sdk-nodejs
 
-This wrapper exposes most of the functionality of `connect-sdk-nodes` as possible in the exact same way. This includes the way the SDK wrapper is initialized. The only differences are functions that use callbacks:
+This wrapper exposes most of the functionality of `connect-sdk-nodejs` as possible in the exact same way. This includes the way the SDK wrapper is initialized. The only differences are functions that use callbacks:
 * Calls like Create Payment, Convert Amount, etc.
 * Webhook helper methods (`validate`, `unmarshal`).
-* Webhooks secret key stores. This means that the webhooks helper from this wrapper is initialized differently. However, the original webhooks helper is wrapped, so if you have a secret key store implementation that still uses callbacks, you can just initialize the `connect-sdk-nodejs` webhooks helper, then use the webhooks helper from this wrapper:
+* Webhooks secret key stores. This means that the webhooks helper from this wrapper is initialized differently. If you have a secret key store implementation that still uses callbacks, use `initWithCallbacks` instead of `init`:
    ```
-   import originalSdk = require("connect-sdk-nodejs");
    import connectSdk = require("promiseful-connect-sdk");
 
-   originalSdk.webhooks.init(...);
-   const webhooks = connectSdk.webhooks;
+   const webhooks = connectSdk.webhooks.initWithCallbacks(...);
    // webhooks.unmarshal returns a promise, yet works with the callback-based secret key store
    ```
 
@@ -62,7 +60,7 @@ From the folder where your `package.json` is located, run the following command 
 
     npm i promiseful-connect-sdk
 
-It's advised to do this in addition to installing `connect-sdk-nodejs`, so you can take full control over its version.
+It's advised to do this in addition to installing `connect-sdk-nodejs`, so you can take full control over its version. This is necessary to get access to new request or response properties.
 
 ## Building the repository
 

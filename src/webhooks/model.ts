@@ -1,5 +1,5 @@
 import { WebhooksEvent } from "connect-sdk-nodejs/lib/model/domain/webhooks";
-import { RequestHeaders } from "connect-sdk-nodejs/lib/model/webhooks";
+import { RequestHeaders, WebhooksContext as ConnectContext } from "connect-sdk-nodejs/lib/model/webhooks";
 
 export interface InMemorySecretKeyStore extends SecretKeyStore {
   storeSecretKey(keyId: string, secretKey: string): void;
@@ -17,6 +17,7 @@ export interface WebhooksContext {
 
 export interface WebhooksHelper {
   init(context: WebhooksContext): WebhooksHelper;
+  initWithCallbacks(context: ConnectContext): WebhooksHelper;
   validate(body: string | Buffer, requestHeaders: RequestHeaders): Promise<void>;
   unmarshal(body: string | Buffer, requestHeaders: RequestHeaders): Promise<WebhooksEvent>;
 

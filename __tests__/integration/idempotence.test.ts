@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import uuid = require("uuid");
+import * as uuid from "uuid";
 import connectSdk, { config } from "./init";
 
 /**

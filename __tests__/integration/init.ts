@@ -1,4 +1,4 @@
-import connectSdk = require("../../src");
+import * as connectSdk from "../../src";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 export const config = require("../config.json");

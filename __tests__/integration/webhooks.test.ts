@@ -1,7 +1,7 @@
-import express = require("express");
-import request = require("supertest");
-import bodyParser = require("body-parser");
-import connectSdk = require("../../src");
+import * as express from "express";
+import * as request from "supertest";
+import * as bodyParser from "body-parser";
+import * as connectSdk from "../../src";
 
 const app = express();
 const webhooks = connectSdk.webhooks;

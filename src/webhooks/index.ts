@@ -39,6 +39,10 @@ const webhooksHelper: WebhooksHelper = {
     });
     return webhooksHelper;
   },
+  initWithCallbacks: (context) => {
+    delegate.init(context);
+    return webhooksHelper;
+  },
 
   validate: validate,
   unmarshal: unmarshal,

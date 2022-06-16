@@ -68,7 +68,7 @@ const validSignature = "2S7doBj/GnJnacIjSJzr5fxGM5xmfQyFAwxv1I53ZEk=";
 const keyId = "dummy-key-id";
 const secretKey = "hello+world";
 
-import connectSdk = require("../../src");
+import * as connectSdk from "../../src";
 const webhooks = connectSdk.webhooks;
 
 /**
