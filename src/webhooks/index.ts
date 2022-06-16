@@ -1,11 +1,11 @@
 import { RequestHeaders } from "connect-sdk-nodejs/lib/model/webhooks";
 import { WebhooksEvent } from "connect-sdk-nodejs/lib/model/domain/webhooks";
-import { WebhooksHelper } from "./model";
-import delegate = require("connect-sdk-nodejs/lib/webhooks");
+import { InMemorySecretKeyStore, WebhooksHelper } from "./model";
+import { InMemorySecretKeyStore as ConnectSecretKeyStore, WebhooksHelper as ConnectHelper } from "connect-sdk-nodejs/lib/model/webhooks";
 
-function validate(body: string | Buffer, requestHeaders: RequestHeaders): Promise<void> {
+function validate(body: string | Buffer, requestHeaders: RequestHeaders, helper: ConnectHelper): Promise<void> {
   return new Promise((resolve, reject) => {
-    delegate.validate(body, requestHeaders, (error) => {
+    helper.validate(body, requestHeaders, (error) => {
       if (error) {
         reject(error);
       } else {
@@ -15,9 +15,9 @@ function validate(body: string | Buffer, requestHeaders: RequestHeaders): Promis
   });
 }
 
-function unmarshal(body: string | Buffer, requestHeaders: RequestHeaders): Promise<WebhooksEvent> {
+function unmarshal(body: string | Buffer, requestHeaders: RequestHeaders, helper: ConnectHelper): Promise<WebhooksEvent> {
   return new Promise((resolve, reject) => {
-    delegate.unmarshal(body, requestHeaders, (error, event) => {
+    helper.unmarshal(body, requestHeaders, (error, event) => {
       if (event) {
         resolve(event);
       } else {
@@ -27,30 +27,11 @@ function unmarshal(body: string | Buffer, requestHeaders: RequestHeaders): Promi
   });
 }
 
-const webhooksHelper: WebhooksHelper = {
-  init: (context) => {
-    delegate.init({
-      getSecretKey(keyId, cb) {
-        context
-          .getSecretKey(keyId)
-          .then((secretKey) => cb(null, secretKey))
-          .catch((error) => cb(error, null));
-      },
-    });
-    return webhooksHelper;
-  },
-  initWithCallbacks: (context) => {
-    delegate.init(context);
-    return webhooksHelper;
-  },
-
-  validate: validate,
-  unmarshal: unmarshal,
-
-  inMemorySecretKeyStore: {
-    getSecretKey(keyId) {
+function wrapInMemoryKeyStore(store: ConnectSecretKeyStore): InMemorySecretKeyStore {
+  return {
+    getSecretKey: (keyId) => {
       return new Promise((resolve, reject) => {
-        delegate.inMemorySecretKeyStore.getSecretKey(keyId, (error, secretKey) => {
+        store.getSecretKey(keyId, (error, secretKey) => {
           if (secretKey !== null) {
             resolve(secretKey);
           } else {
@@ -59,16 +40,40 @@ const webhooksHelper: WebhooksHelper = {
         });
       });
     },
-    storeSecretKey(keyId, secretKey) {
-      delegate.inMemorySecretKeyStore.storeSecretKey(keyId, secretKey);
+    storeSecretKey: (keyId, secretKey) => {
+      store.storeSecretKey(keyId, secretKey);
     },
-    removeSecretKey(keyId) {
-      delegate.inMemorySecretKeyStore.removeSecretKey(keyId);
+    removeSecretKey: (keyId) => {
+      store.removeSecretKey(keyId);
     },
-    clear() {
-      delegate.inMemorySecretKeyStore.clear();
+    clear: () => {
+      store.clear();
     },
-  },
-};
+  };
+}
 
-export = webhooksHelper;
+export function wrapWebhooksHelper(helper: ConnectHelper): WebhooksHelper {
+  const webhooksHelper: WebhooksHelper = {
+    init: (context) => {
+      helper.init({
+        getSecretKey(keyId, cb) {
+          context
+            .getSecretKey(keyId)
+            .then((secretKey) => cb(null, secretKey))
+            .catch((error) => cb(error, null));
+        },
+      });
+      return webhooksHelper;
+    },
+    initWithCallbacks: (context) => {
+      helper.init(context);
+      return webhooksHelper;
+    },
+
+    validate: (body, requestHeaders) => validate(body, requestHeaders, helper),
+    unmarshal: (body, requestHeaders) => unmarshal(body, requestHeaders, helper),
+
+    inMemorySecretKeyStore: wrapInMemoryKeyStore(helper.inMemorySecretKeyStore),
+  };
+  return webhooksHelper;
+}

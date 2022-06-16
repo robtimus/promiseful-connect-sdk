@@ -1,35 +1,36 @@
 import { DisputesClient } from "../model";
 import { handleSdkResponse } from "../util";
-import connectSdk = require("connect-sdk-nodejs");
+import { DisputesClient as ConnectClient } from "connect-sdk-nodejs/lib/model/disputes";
 
-const disputesClient: DisputesClient = {
-  get(merchantId, disputeId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.disputes.get(merchantId, disputeId, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+export function wrapDisputesClient(client: ConnectClient): DisputesClient {
+  return {
+    get: (merchantId, disputeId, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.get(merchantId, disputeId, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  submit(merchantId, disputeId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.disputes.submit(merchantId, disputeId, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    submit: (merchantId, disputeId, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.submit(merchantId, disputeId, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  cancel(merchantId, disputeId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.disputes.cancel(merchantId, disputeId, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    cancel: (merchantId, disputeId, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.cancel(merchantId, disputeId, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  uploadFile(merchantId, disputeId, postData, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.disputes.uploadFile(merchantId, disputeId, postData, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    uploadFile: (merchantId, disputeId, postData, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.uploadFile(merchantId, disputeId, postData, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-};
-export = disputesClient;
+    },
+  };
+}

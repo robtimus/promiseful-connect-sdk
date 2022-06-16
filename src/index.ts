@@ -1,21 +1,21 @@
 import { ConnectSdk } from "./model";
+import { wrapCapturesClient } from "./captures";
+import { wrapDisputesClient } from "./disputes";
+import { wrapFilesClient } from "./files";
+import { wrapHostedcheckoutsClient } from "./hostedcheckouts";
+import { wrapHostedmandatemanagementsClient } from "./hostedmandatemanagements";
+import { wrapMandatesClient } from "./mandates";
+import { wrapPaymentsClient } from "./payments";
+import { wrapPayoutsClient } from "./payouts";
+import { wrapProductgroupsClient } from "./productgroups";
+import { wrapProductsClient } from "./products";
+import { wrapRefundsClient } from "./refunds";
+import { wrapRiskassessmentsClient } from "./riskassessments";
+import { wrapServicesClient } from "./services";
+import { wrapSessionsClient } from "./sessions";
+import { wrapTokensClient } from "./tokens";
+import { wrapWebhooksHelper } from "./webhooks";
 import delegate = require("connect-sdk-nodejs");
-import captures = require("./captures");
-import disputes = require("./disputes");
-import files = require("./files");
-import hostedcheckouts = require("./hostedcheckouts");
-import hostedmandatemanagements = require("./hostedmandatemanagements");
-import mandates = require("./mandates");
-import payments = require("./payments");
-import payouts = require("./payouts");
-import productgroups = require("./productgroups");
-import products = require("./products");
-import refunds = require("./refunds");
-import riskassessments = require("./riskassessments");
-import services = require("./services");
-import sessions = require("./sessions");
-import tokens = require("./tokens");
-import webhooks = require("./webhooks");
 
 const connectSdk: ConnectSdk = {
   init: (context) => {
@@ -23,24 +23,24 @@ const connectSdk: ConnectSdk = {
     return connectSdk;
   },
 
-  captures,
-  disputes,
-  files,
-  hostedcheckouts,
-  hostedmandatemanagements,
-  mandates,
-  payments,
-  payouts,
-  productgroups,
-  products,
-  refunds,
-  riskassessments,
-  services,
-  sessions,
-  tokens,
+  captures: wrapCapturesClient(delegate.captures),
+  disputes: wrapDisputesClient(delegate.disputes),
+  files: wrapFilesClient(delegate.files),
+  hostedcheckouts: wrapHostedcheckoutsClient(delegate.hostedcheckouts),
+  hostedmandatemanagements: wrapHostedmandatemanagementsClient(delegate.hostedmandatemanagements),
+  mandates: wrapMandatesClient(delegate.mandates),
+  payments: wrapPaymentsClient(delegate.payments),
+  payouts: wrapPayoutsClient(delegate.payouts),
+  productgroups: wrapProductgroupsClient(delegate.productgroups),
+  products: wrapProductsClient(delegate.products),
+  refunds: wrapRefundsClient(delegate.refunds),
+  riskassessments: wrapRiskassessmentsClient(delegate.riskassessments),
+  services: wrapServicesClient(delegate.services),
+  sessions: wrapSessionsClient(delegate.sessions),
+  tokens: wrapTokensClient(delegate.tokens),
 
   context: delegate.context,
-  webhooks,
+  webhooks: wrapWebhooksHelper(delegate.webhooks),
   obfuscate: delegate.obfuscate,
 };
 

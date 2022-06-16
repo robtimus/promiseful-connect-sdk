@@ -1,56 +1,57 @@
 import { ProductsClient } from "../model";
 import { handleSdkResponse } from "../util";
-import connectSdk = require("connect-sdk-nodejs");
+import { ProductsClient as ConnectClient } from "connect-sdk-nodejs/lib/model/products";
 
-const productsClient: ProductsClient = {
-  find(merchantId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.products.find(merchantId, paymentContext, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+export function wrapProductsClient(client: ConnectClient): ProductsClient {
+  return {
+    find: (merchantId, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.find(merchantId, paymentContext, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  get(merchantId, paymentProductId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.products.get(merchantId, paymentProductId, paymentContext, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    get: (merchantId, paymentProductId, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.get(merchantId, paymentProductId, paymentContext, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  directory(merchantId, paymentProductId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.products.directory(merchantId, paymentProductId, paymentContext, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    directory: (merchantId, paymentProductId, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.directory(merchantId, paymentProductId, paymentContext, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  customerDetails(merchantId, paymentProductId, postData, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.products.customerDetails(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    customerDetails: (merchantId, paymentProductId, postData, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.customerDetails(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  deviceFingerprint(merchantId, paymentProductId, postData, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.products.deviceFingerprint(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    deviceFingerprint: (merchantId, paymentProductId, postData, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.deviceFingerprint(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  networks(merchantId, paymentProductId, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.products.networks(merchantId, paymentProductId, paymentContext, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    networks: (merchantId, paymentProductId, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.networks(merchantId, paymentProductId, paymentContext, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-  sessions(merchantId, paymentProductId, postData, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.products.sessions(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+    },
+    sessions: (merchantId, paymentProductId, postData, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.sessions(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-};
-export = productsClient;
+    },
+  };
+}

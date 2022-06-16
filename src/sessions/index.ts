@@ -1,14 +1,15 @@
 import { SessionsClient } from "../model";
 import { handleSdkResponse } from "../util";
-import connectSdk = require("connect-sdk-nodejs");
+import { SessionsClient as ConnectClient } from "connect-sdk-nodejs/lib/model/sessions";
 
-const sessionsClient: SessionsClient = {
-  create(merchantId, postData, paymentContext) {
-    return new Promise((resolve, reject) => {
-      connectSdk.sessions.create(merchantId, postData, paymentContext || null, (error, response) => {
-        handleSdkResponse(error, response, resolve, reject);
+export function wrapSessionsClient(client: ConnectClient): SessionsClient {
+  return {
+    create: (merchantId, postData, paymentContext) => {
+      return new Promise((resolve, reject) => {
+        client.create(merchantId, postData, paymentContext || null, (error, response) => {
+          handleSdkResponse(error, response, resolve, reject);
+        });
       });
-    });
-  },
-};
-export = sessionsClient;
+    },
+  };
+}
