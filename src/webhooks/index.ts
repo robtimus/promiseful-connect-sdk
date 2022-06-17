@@ -1,7 +1,7 @@
 import { RequestHeaders } from "connect-sdk-nodejs/lib/model/webhooks";
 import { WebhooksEvent } from "connect-sdk-nodejs/lib/model/domain/webhooks";
-import { InMemorySecretKeyStore, WebhooksHelper } from "./model";
-import { InMemorySecretKeyStore as ConnectSecretKeyStore, WebhooksHelper as ConnectHelper } from "connect-sdk-nodejs/lib/model/webhooks";
+import { InMemorySecretKeyStore, WebhooksContext, WebhooksHelper } from "./model";
+import { InMemorySecretKeyStore as ConnectSecretKeyStore, WebhooksContext as ConnectContext, WebhooksHelper as ConnectHelper } from "connect-sdk-nodejs/lib/model/webhooks";
 
 function validate(body: string | Buffer, requestHeaders: RequestHeaders, helper: ConnectHelper): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -25,6 +25,17 @@ function unmarshal(body: string | Buffer, requestHeaders: RequestHeaders, helper
       }
     });
   });
+}
+
+function wrapWebhooksContext(context: WebhooksContext): ConnectContext {
+  return {
+    getSecretKey: (keyId, cb) => {
+      context
+        .getSecretKey(keyId)
+        .then((secretKey) => cb(null, secretKey))
+        .catch((error) => cb(error, null));
+    },
+  };
 }
 
 function wrapInMemoryKeyStore(store: ConnectSecretKeyStore): InMemorySecretKeyStore {
@@ -55,15 +66,7 @@ function wrapInMemoryKeyStore(store: ConnectSecretKeyStore): InMemorySecretKeySt
 export function wrapWebhooksHelper(helper: ConnectHelper): WebhooksHelper {
   const webhooksHelper: WebhooksHelper = {
     init: (context) => {
-      helper.init({
-        getSecretKey(keyId, cb) {
-          context
-            .getSecretKey(keyId)
-            .then((secretKey) => cb(null, secretKey))
-            .catch((error) => cb(error, null));
-        },
-      });
-      return webhooksHelper;
+      return webhooksHelper.initWithCallbacks(wrapWebhooksContext(context));
     },
     initWithCallbacks: (context) => {
       helper.init(context);
