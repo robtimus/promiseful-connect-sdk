@@ -1,7 +1,11 @@
-import { RequestHeaders } from "connect-sdk-nodejs/lib/model/webhooks";
 import { WebhooksEvent } from "connect-sdk-nodejs/lib/model/domain/webhooks";
 import { InMemorySecretKeyStore, WebhooksContext, WebhooksHelper } from "./model";
-import { InMemorySecretKeyStore as ConnectSecretKeyStore, WebhooksContext as ConnectContext, WebhooksHelper as ConnectHelper } from "connect-sdk-nodejs/lib/model/webhooks";
+import {
+  RequestHeaders,
+  InMemorySecretKeyStore as ConnectSecretKeyStore,
+  WebhooksContext as ConnectContext,
+  WebhooksHelper as ConnectHelper,
+} from "connect-sdk-nodejs/lib/model/webhooks";
 
 function validate(body: string | Buffer, requestHeaders: RequestHeaders, helper: ConnectHelper): Promise<void> {
   return new Promise((resolve, reject) => {

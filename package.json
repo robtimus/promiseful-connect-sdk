@@ -85,7 +85,8 @@
     ],
     "testPathIgnorePatterns": [
       "__tests__/integration/init.ts"
-    ]
+    ],
+    "collectCoverage": true
   },
   "jest-junit": {
     "includeShortConsoleOutput": "true"
