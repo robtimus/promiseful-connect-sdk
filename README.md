@@ -1,4 +1,9 @@
 # Ingenico Connect Node.js promiseful SDK
+[![npm](https://img.shields.io/npm/v/promiseful-connect-sdk)](https://www.npmjs.com/package/promiseful-connect-sdk)
+[![Build Status](https://github.com/robtimus/promiseful-connect-sdk/actions/workflows/build.yml/badge.svg)](https://github.com/robtimus/promiseful-connect-sdk/actions/workflows/build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=robtimus%3Apromiseful-connect-sdk&metric=alert_status)](https://sonarcloud.io/summary/overall?id=robtimus%3Apromiseful-connect-sdk)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=robtimus%3Apromiseful-connect-sdk&metric=coverage)](https://sonarcloud.io/summary/overall?id=robtimus%3Apromiseful-connect-sdk)
+[![Known Vulnerabilities](https://snyk.io/test/github/robtimus/promiseful-connect-sdk/badge.svg)](https://snyk.io/test/github/robtimus/promiseful-connect-sdk)
 
 A wrapper around [connect-sdk-nodejs](https://github.com/Ingenico-ePayments/connect-sdk-nodejs) that uses promises instead of callbacks. This has some advantages:
 
