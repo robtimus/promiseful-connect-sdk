@@ -26,7 +26,7 @@ export function handleBinarySdkResponse(
   reject: (reason?: any) => void
 ): void {
   if (response?.isSuccess) {
-    const metaData = response.file || ({} as FileMetaData);
+    const metaData = response.file ?? ({} as FileMetaData);
     resolve({
       content: response.body as Readable,
       contentType: metaData.contentType,
