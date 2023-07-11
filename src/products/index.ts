@@ -27,14 +27,14 @@ export function wrapProductsClient(client: ConnectClient): ProductsClient {
     },
     customerDetails: (merchantId, paymentProductId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.customerDetails(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
+        client.customerDetails(merchantId, paymentProductId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     deviceFingerprint: (merchantId, paymentProductId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.deviceFingerprint(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
+        client.deviceFingerprint(merchantId, paymentProductId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
@@ -48,7 +48,7 @@ export function wrapProductsClient(client: ConnectClient): ProductsClient {
     },
     sessions: (merchantId, paymentProductId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.sessions(merchantId, paymentProductId, postData, paymentContext || null, (error, response) => {
+        client.sessions(merchantId, paymentProductId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });

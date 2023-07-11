@@ -6,14 +6,14 @@ export function wrapHostedmandatemanagementsClient(client: ConnectClient): Hoste
   return {
     create: (merchantId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.create(merchantId, postData, paymentContext || null, (error, response) => {
+        client.create(merchantId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     get: (merchantId, hostedMandateManagementId, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.get(merchantId, hostedMandateManagementId, paymentContext || null, (error, response) => {
+        client.get(merchantId, hostedMandateManagementId, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });

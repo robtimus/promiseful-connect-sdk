@@ -6,14 +6,14 @@ export function wrapCapturesClient(client: ConnectClient): CapturesClient {
   return {
     get: (merchantId, captureId, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.get(merchantId, captureId, paymentContext || null, (error, response) => {
+        client.get(merchantId, captureId, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     refund: (merchantId, captureId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.refund(merchantId, captureId, postData, paymentContext || null, (error, response) => {
+        client.refund(merchantId, captureId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });

@@ -6,21 +6,21 @@ export function wrapHostedcheckoutsClient(client: ConnectClient): Hostedcheckout
   return {
     create: (merchantId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.create(merchantId, postData, paymentContext || null, (error, response) => {
+        client.create(merchantId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     get: (merchantId, hostedCheckoutId, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.get(merchantId, hostedCheckoutId, paymentContext || null, (error, response) => {
+        client.get(merchantId, hostedCheckoutId, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     remove: (merchantId, hostedCheckoutId, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.remove(merchantId, hostedCheckoutId, paymentContext || null, (error, response) => {
+        client.remove(merchantId, hostedCheckoutId, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });

@@ -20,7 +20,7 @@ export function wrapProductgroupsClient(client: ConnectClient): ProductgroupsCli
     },
     deviceFingerprint: (merchantId, paymentProductGroupId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.deviceFingerprint(merchantId, paymentProductGroupId, postData, paymentContext || null, (error, response) => {
+        client.deviceFingerprint(merchantId, paymentProductGroupId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });

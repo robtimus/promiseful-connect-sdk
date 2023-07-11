@@ -6,42 +6,42 @@ export function wrapMandatesClient(client: ConnectClient): MandatesClient {
   return {
     create: (merchantId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.create(merchantId, postData, paymentContext || null, (error, response) => {
+        client.create(merchantId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     createWithMandateReference: (merchantId, uniqueMandateReference, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.createWithMandateReference(merchantId, uniqueMandateReference, postData, paymentContext || null, (error, response) => {
+        client.createWithMandateReference(merchantId, uniqueMandateReference, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     get: (merchantId, uniqueMandateReference, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.get(merchantId, uniqueMandateReference, paymentContext || null, (error, response) => {
+        client.get(merchantId, uniqueMandateReference, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     block: (merchantId, uniqueMandateReference, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.block(merchantId, uniqueMandateReference, paymentContext || null, (error, response) => {
+        client.block(merchantId, uniqueMandateReference, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     unblock: (merchantId, uniqueMandateReference, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.unblock(merchantId, uniqueMandateReference, paymentContext || null, (error, response) => {
+        client.unblock(merchantId, uniqueMandateReference, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     revoke: (merchantId, uniqueMandateReference, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.revoke(merchantId, uniqueMandateReference, paymentContext || null, (error, response) => {
+        client.revoke(merchantId, uniqueMandateReference, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });

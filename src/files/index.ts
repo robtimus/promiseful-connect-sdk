@@ -6,7 +6,7 @@ export function wrapFilesClient(client: ConnectClient): FilesClient {
   return {
     getFile: (merchantId, fileId, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.getFile(merchantId, fileId, paymentContext || null, (error, response) => {
+        client.getFile(merchantId, fileId, paymentContext ?? null, (error, response) => {
           handleBinarySdkResponse(error, response, resolve, reject);
         });
       });

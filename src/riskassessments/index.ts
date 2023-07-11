@@ -6,14 +6,14 @@ export function wrapRiskassessmentsClient(client: ConnectClient): Riskassessment
   return {
     bankaccounts: (merchantId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.bankaccounts(merchantId, postData, paymentContext || null, (error, response) => {
+        client.bankaccounts(merchantId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
     },
     cards: (merchantId, postData, paymentContext) => {
       return new Promise((resolve, reject) => {
-        client.cards(merchantId, postData, paymentContext || null, (error, response) => {
+        client.cards(merchantId, postData, paymentContext ?? null, (error, response) => {
           handleSdkResponse(error, response, resolve, reject);
         });
       });
