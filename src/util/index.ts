@@ -9,7 +9,7 @@ export function handleSdkResponse<T>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reject: (reason?: any) => void
 ): void {
-  if (response && response.isSuccess) {
+  if (response?.isSuccess) {
     resolve(response.body as T);
   } else if (response) {
     reject(response);
@@ -25,7 +25,7 @@ export function handleBinarySdkResponse(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reject: (reason?: any) => void
 ): void {
-  if (response && response.isSuccess) {
+  if (response?.isSuccess) {
     const metaData = response.file || ({} as FileMetaData);
     resolve({
       content: response.body as Readable,
