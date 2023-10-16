@@ -4,6 +4,7 @@ import { wrapDisputesClient } from "./disputes";
 import { wrapFilesClient } from "./files";
 import { wrapHostedcheckoutsClient } from "./hostedcheckouts";
 import { wrapHostedmandatemanagementsClient } from "./hostedmandatemanagements";
+import { wrapInstallmentsClient } from "./installments";
 import { wrapMandatesClient } from "./mandates";
 import { wrapPaymentsClient } from "./payments";
 import { wrapPayoutsClient } from "./payouts";
@@ -28,6 +29,7 @@ const connectSdk: ConnectSdk = {
   files: wrapFilesClient(delegate.files),
   hostedcheckouts: wrapHostedcheckoutsClient(delegate.hostedcheckouts),
   hostedmandatemanagements: wrapHostedmandatemanagementsClient(delegate.hostedmandatemanagements),
+  installments: wrapInstallmentsClient(delegate.installments),
   mandates: wrapMandatesClient(delegate.mandates),
   payments: wrapPaymentsClient(delegate.payments),
   payouts: wrapPayoutsClient(delegate.payouts),

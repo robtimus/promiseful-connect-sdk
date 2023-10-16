@@ -28,7 +28,7 @@
     "test:integration": "jest --group=integration"
   },
   "dependencies": {
-    "connect-sdk-nodejs": "^4.3.0"
+    "connect-sdk-nodejs": "^4.15.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",

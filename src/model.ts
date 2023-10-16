@@ -8,6 +8,7 @@ import {
   CreateHostedMandateManagementResponse,
   GetHostedMandateManagementResponse,
 } from "connect-sdk-nodejs/lib/model/domain/hostedmandatemanagement";
+import { GetInstallmentRequest, InstallmentOptionsResponse } from "connect-sdk-nodejs/lib/model/domain/installments";
 import { CreateMandateRequest, CreateMandateResponse, GetMandateResponse } from "connect-sdk-nodejs/lib/model/domain/mandates";
 import {
   ApprovePaymentRequest,
@@ -92,6 +93,10 @@ export interface HostedcheckoutsClient {
 export interface HostedmandatemanagementsClient {
   create(merchantId: string, postData: CreateHostedMandateManagementRequest, paymentContext?: PaymentContext | null): Promise<CreateHostedMandateManagementResponse>;
   get(merchantId: string, hostedMandateManagementId: string, paymentContext?: PaymentContext | null): Promise<GetHostedMandateManagementResponse>;
+}
+
+export interface InstallmentsClient {
+  getInstallmentsInfo(merchantId: string, postData: GetInstallmentRequest, paymentContext?: PaymentContext | null): Promise<InstallmentOptionsResponse>;
 }
 
 export interface MandatesClient {
@@ -204,6 +209,7 @@ export interface ConnectSdk {
   readonly files: FilesClient;
   readonly hostedcheckouts: HostedcheckoutsClient;
   readonly hostedmandatemanagements: HostedmandatemanagementsClient;
+  readonly installments: InstallmentsClient;
   readonly mandates: MandatesClient;
   readonly payments: PaymentsClient;
   readonly payouts: PayoutsClient;
