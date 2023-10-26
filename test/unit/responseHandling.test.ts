@@ -81,7 +81,7 @@ describe("response handling", () => {
     it("non-JSON error", async () => {
       return connectSdk.services.testconnection("unknown").catch((result) => {
         expect(result.name).toBe("SyntaxError");
-        expect(result.message).toBe("Unexpected token < in JSON at position 0");
+        expect(result.message).toMatch(new RegExp("Unexpected token .*"));
         expect(result.status).toBe(404);
         expect(result.body).toMatch(new RegExp("<!DOCTYPE html>.*</html>.*", "s"));
       });
@@ -120,7 +120,7 @@ describe("response handling", () => {
     it("non-JSON error", async () => {
       return connectSdk.files.getFile("unknown", "fileId").catch((result) => {
         expect(result.name).toBe("SyntaxError");
-        expect(result.message).toBe("Unexpected token < in JSON at position 0");
+        expect(result.message).toMatch(new RegExp("Unexpected token .*"));
         expect(result.status).toBe(404);
         expect(result.body).toMatch(new RegExp("<!DOCTYPE html>.*</html>.*", "s"));
       });

@@ -61,7 +61,7 @@ jobs:
             -Dsonar.links.issue=${{ env.projectBugUrl }}
             -Dsonar.links.scm=${{ env.projectRepositoryUrl }}
             -Dsonar.sources=src
-            -Dsonar.tests=__tests__
+            -Dsonar.tests=test
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
       - name: SonarQube Quality Gate check
         uses: sonarsource/sonarqube-quality-gate-action@master

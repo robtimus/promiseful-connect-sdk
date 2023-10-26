@@ -84,7 +84,7 @@
       "jest-junit"
     ],
     "testPathIgnorePatterns": [
-      "__tests__/integration/init.ts"
+      "test/integration/init.ts"
     ],
     "collectCoverage": true
   },

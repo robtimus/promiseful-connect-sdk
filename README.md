@@ -84,7 +84,7 @@ There are two types of tests:
     ```
     npm run test:unit
     ```
-2. Integration tests. Before you can run these, you first need to copy file `__tests__/config.json.dist` to `__tests__/config.json` and replace all values as needed.\
+2. Integration tests. Before you can run these, you first need to copy file `test/config.json.dist` to `test/config.json` and replace all values as needed.\
    Run these tests as follows:
 
     ```
