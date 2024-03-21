@@ -22,7 +22,7 @@ This wrapper exposes most of the functionality of `connect-sdk-nodejs` as possib
 * Calls like Create Payment, Convert Amount, etc.
 * Webhook helper methods (`validate`, `unmarshal`).
 * Webhooks secret key stores. This means that the webhooks helper from this wrapper is initialized differently. If you have a secret key store implementation that still uses callbacks, use `initWithCallbacks` instead of `init`:
-   ```
+   ```typescript
    import connectSdk = require("promiseful-connect-sdk");
 
    const webhooks = connectSdk.webhooks.initWithCallbacks(...);
@@ -32,7 +32,7 @@ This wrapper exposes most of the functionality of `connect-sdk-nodejs` as possib
 Here are some examples, where `connectSdk` is an initialized wrapper.
 
 Create a payment:
-```
+```typescript
 connectSdk.payments
   .create(merchantId, body, paymentContext)
   .then((createResponse) => {
@@ -44,7 +44,7 @@ connectSdk.payments
 ```
 
 Unmarshall a webhooks event:
-```
+```typescript
 webhooks
   .unmarshal(body, headers)
   .then((event) => {
@@ -57,7 +57,7 @@ webhooks
 
 ## Requirements
 
-Node.js 8 or higher is required. In addition, `connect-sdk-nodejs` version 4.0.0 or higher is required.
+Node.js 8 or higher is required. In addition, `connect-sdk-nodejs` version 4.x.x is required.
 
 ## Installation
 
@@ -94,3 +94,32 @@ There are two types of tests:
 You can also run both types of tests together as follows:
 
     npm run test
+
+## Deprecated
+
+As of 2024-03-21, this project is no longer maintained. Version 5.0.0 of [connect-sdk-nodejs](https://github.com/Worldline-Global-Collect/connect-sdk-nodejs) replaced callbacks with promises, making this wrapper unnecessary. For instance, with `connect-sdk-nodejs`:
+
+```typescript
+client.v1.payments.create(merchantId, body, paymentContext)
+  .then((response) => connectSdk.assertSuccess(response).body)
+  .then((createResponse) => {
+    // createResponse is a CreatePaymentResponse
+  })
+  .catch((error) => {
+    // error is either the error thrown by client.v1.payments.create,
+    // or an SdkApiError containing the non-success SdkResponse object's status and body
+  });
+```
+
+```typescript
+client.v1.files.getFile(merchantId, fileId)
+  .then((response) => connectSdk.assertSuccess(response))
+  .then((fileResponse) => {
+    // fileResponse.body is a Readable Stream
+    // fileResponse.file is the file metadata
+  })
+  .catch((error) => {
+    // error is either the error thrown by client.v1.files.getFile,
+    // or an SdkApiError containing the non-success SdkResponse object's status and body
+  })
+```
